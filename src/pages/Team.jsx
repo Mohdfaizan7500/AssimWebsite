@@ -5,12 +5,11 @@ import Reveal from '../components/Reveal';
 import SmartImage from '../components/SmartImage';
 import SocialIcon from '../components/SocialIcon';
 import CTABanner from '../components/CTABanner';
-import { team } from '../data/team';
-import { site } from '../data/site';
+import { useContent } from '../context/ContentContext.jsx';
 import { useSEO } from '../hooks/useSEO';
-import IMAGES from '../data/images';
 
 export default function Team() {
+  const { site, team, images } = useContent();
   useSEO(site.seo.team);
 
   return (
@@ -18,7 +17,7 @@ export default function Team() {
       <PageHero
         title="Our Team"
         description="Civil engineers, architects, structural engineers and project managers working together on every project."
-        image={IMAGES.teamHero}
+        image={images.teamHero}
         alt="Engineering team collaborating in a project meeting"
         breadcrumbs={[{ label: 'Our Team' }]}
       />

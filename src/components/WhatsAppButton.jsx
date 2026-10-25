@@ -1,7 +1,8 @@
 import { MessageCircle } from 'lucide-react';
-import { site } from '../data/site';
+import { useContent } from '../context/ContentContext.jsx';
 
 export default function WhatsAppButton() {
+  const { site } = useContent();
   return (
     <a
       href={site.contact.whatsappHref}

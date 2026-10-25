@@ -1,14 +1,15 @@
 import PageHero from './PageHero';
-import { site } from '../data/site';
-import IMAGES from '../data/images';
+import { useContent } from '../context/ContentContext.jsx';
 
 export default function LegalPage({ title, updated, breadcrumb, sections }) {
+  const { site, images } = useContent();
+
   return (
     <>
       <PageHero
         title={title}
         description={`This document is demonstration content for the ${site.name} sample website.`}
-        image={IMAGES.contactBanner}
+        image={images.contactBanner}
         alt="Office interior background"
         breadcrumbs={[{ label: breadcrumb }]}
       />

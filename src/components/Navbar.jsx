@@ -3,7 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Mail, Menu, Phone, X } from 'lucide-react';
 import Logo from './Logo';
 import SocialIcon from './SocialIcon';
-import { site } from '../data/site';
+import { useContent } from '../context/ContentContext.jsx';
 
 const links = [
   { label: 'Home', to: '/' },
@@ -15,6 +15,7 @@ const links = [
 ];
 
 export default function Navbar() {
+  const { site } = useContent();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { pathname } = useLocation();

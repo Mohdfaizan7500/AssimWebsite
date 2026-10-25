@@ -17,11 +17,12 @@ import Gallery from '../components/Gallery';
 import ProjectCard from '../components/ProjectCard';
 import CTABanner from '../components/CTABanner';
 import NotFound from './NotFound';
-import { getProjectBySlug, getRelatedProjects } from '../data/projects';
+import { useContent } from '../context/ContentContext.jsx';
 import { useSEO } from '../hooks/useSEO';
 
 export default function ProjectDetails() {
   const { slug } = useParams();
+  const { getProjectBySlug, getRelatedProjects } = useContent();
   const project = getProjectBySlug(slug);
 
   useSEO({

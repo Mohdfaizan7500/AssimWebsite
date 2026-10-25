@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { AlertCircle, CheckCircle2, Loader2, Send } from 'lucide-react';
 import FormField from './FormField';
-import { services } from '../data/services';
-import { submitContact, isSimulated } from '../services/api';
+import { useContent } from '../context/ContentContext.jsx';
+import { submitContact } from '../services/api';
 import { email as emailRule, minLength, phone, required, validate } from '../utils/validation';
 
 const initialValues = {
@@ -26,6 +26,7 @@ const rules = {
 };
 
 export default function ContactForm() {
+  const { formOptions } = useContent();
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState({ state: 'idle', message: '' });
@@ -57,9 +58,7 @@ export default function ContactForm() {
       await submitContact(values);
       setStatus({
         state: 'success',
-        message: isSimulated()
-          ? 'Thank you. This demo form was submitted successfully — no message was actually sent because no backend is connected.'
-          : 'Thank you. Your message has been sent and our team will respond shortly.',
+        message: 'Thank you. Your message has been sent and our team will respond shortly.',
       });
       setValues(initialValues);
     } catch {
@@ -118,8 +117,10 @@ export default function ContactForm() {
           error={errors.service}
           options={[
             { value: '', label: 'Select a service' },
-            ...services.map((service) => ({ value: service.title, label: service.title })),
-            { value: 'Other', label: 'Other / Not sure yet' },
+            ...formOptions.contactServices.map((service) => ({
+              value: service,
+              label: service,
+            })),
           ]}
         />
         <FormField
@@ -141,12 +142,7 @@ export default function ContactForm() {
           error={errors.budget}
           options={[
             { value: '', label: 'Select a budget range' },
-            { value: 'Under 50,000', label: 'Under 50,000' },
-            { value: '50,000 – 150,000', label: '50,000 – 150,000' },
-            { value: '150,000 – 500,000', label: '150,000 – 500,000' },
-            { value: '500,000 – 1,000,000', label: '500,000 – 1,000,000' },
-            { value: 'Above 1,000,000', label: 'Above 1,000,000' },
-            { value: 'Not decided yet', label: 'Not decided yet' },
+            ...formOptions.budgetRanges.map((range) => ({ value: range, label: range })),
           ]}
         />
       </div>

@@ -1,4 +1,5 @@
 import { Route, Routes, useLocation } from 'react-router-dom';
+import { AlertCircle, Loader2 } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
@@ -14,10 +15,40 @@ import Quote from './pages/Quote';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import NotFound from './pages/NotFound';
+import { useContent } from './context/ContentContext.jsx';
+
+function LoadingScreen() {
+  return (
+    <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-surface">
+      <Loader2 className="h-8 w-8 animate-spin text-orange-500" aria-hidden="true" />
+      <p className="text-sm font-medium text-muted">Loading site content...</p>
+    </div>
+  );
+}
+
+function ErrorScreen({ message, onRetry }) {
+  return (
+    <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-surface px-6 text-center">
+      <AlertCircle className="h-9 w-9 text-orange-500" aria-hidden="true" />
+      <h1 className="text-xl font-bold text-navy-800">We could not load the website</h1>
+      <p className="max-w-md text-sm text-muted">
+        {message || 'The backend API did not respond.'} Make sure the backend server is running
+        and reachable, then try again.
+      </p>
+      <button type="button" onClick={onRetry} className="btn-primary mt-2">
+        Try Again
+      </button>
+    </div>
+  );
+}
 
 export default function App() {
   const { pathname } = useLocation();
+  const { status, error, reload } = useContent();
   const isHome = pathname === '/';
+
+  if (status === 'loading') return <LoadingScreen />;
+  if (status === 'error') return <ErrorScreen message={error?.message} onRetry={reload} />;
 
   return (
     <div className="flex min-h-screen flex-col bg-white">

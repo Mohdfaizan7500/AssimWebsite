@@ -1,8 +1,9 @@
 import LegalPage from '../components/LegalPage';
-import { site } from '../data/site';
+import { useContent } from '../context/ContentContext.jsx';
 import { useSEO } from '../hooks/useSEO';
 
 export default function Privacy() {
+  const { site } = useContent();
   useSEO({
     title: 'Privacy Policy | AMD Engineer Solution',
     description:

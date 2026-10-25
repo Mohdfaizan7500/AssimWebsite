@@ -7,12 +7,11 @@ import Reveal from '../components/Reveal';
 import SmartImage from '../components/SmartImage';
 import Icon from '../components/Icon';
 import CTABanner from '../components/CTABanner';
-import { services } from '../data/services';
-import { site } from '../data/site';
+import { useContent } from '../context/ContentContext.jsx';
 import { useSEO } from '../hooks/useSEO';
-import IMAGES from '../data/images';
 
 export default function Services() {
+  const { site, services, images } = useContent();
   useSEO(site.seo.services);
   const { hash } = useLocation();
 
@@ -31,7 +30,7 @@ export default function Services() {
       <PageHero
         title="Civil Engineering & Construction Services"
         description="A complete range of engineering, design, estimation and construction services delivered by one accountable team."
-        image={IMAGES.servicesHero}
+        image={images.servicesHero}
         alt="Construction site with engineers and structural work"
         breadcrumbs={[{ label: 'Services' }]}
       />

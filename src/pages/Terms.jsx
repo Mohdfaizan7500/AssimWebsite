@@ -1,8 +1,9 @@
 import LegalPage from '../components/LegalPage';
-import { site } from '../data/site';
+import { useContent } from '../context/ContentContext.jsx';
 import { useSEO } from '../hooks/useSEO';
 
 export default function Terms() {
+  const { site } = useContent();
   useSEO({
     title: 'Terms & Conditions | AMD Engineer Solution',
     description:

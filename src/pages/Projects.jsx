@@ -4,12 +4,11 @@ import SectionTitle from '../components/SectionTitle';
 import ProjectCard from '../components/ProjectCard';
 import Reveal from '../components/Reveal';
 import CTABanner from '../components/CTABanner';
-import { categories, projects } from '../data/projects';
-import { site } from '../data/site';
+import { useContent } from '../context/ContentContext.jsx';
 import { useSEO } from '../hooks/useSEO';
-import IMAGES from '../data/images';
 
 export default function Projects() {
+  const { site, categories, projects, images } = useContent();
   useSEO(site.seo.projects);
   const [activeCategory, setActiveCategory] = useState('All');
 
@@ -18,7 +17,7 @@ export default function Projects() {
       activeCategory === 'All'
         ? projects
         : projects.filter((project) => project.category === activeCategory),
-    [activeCategory]
+    [activeCategory, projects]
   );
 
   return (
@@ -26,7 +25,7 @@ export default function Projects() {
       <PageHero
         title="Our Projects"
         description="Explore a selection of completed residential, commercial, industrial, infrastructure and renovation projects."
-        image={IMAGES.projectsHero}
+        image={images.projectsHero}
         alt="Completed commercial building project"
         breadcrumbs={[{ label: 'Our Projects' }]}
       />

@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { AlertCircle, CheckCircle2, Loader2, FileText } from 'lucide-react';
 import FormField from './FormField';
-import { submitQuote, isSimulated } from '../services/api';
+import { useContent } from '../context/ContentContext.jsx';
+import { submitQuote } from '../services/api';
 import { email as emailRule, minLength, phone, required, validate } from '../utils/validation';
 
 const initialValues = {
@@ -29,6 +30,7 @@ const rules = {
 };
 
 export default function QuoteForm({ defaultProjectType = '' }) {
+  const { formOptions } = useContent();
   const [values, setValues] = useState({
     ...initialValues,
     projectType: defaultProjectType,
@@ -61,9 +63,8 @@ export default function QuoteForm({ defaultProjectType = '' }) {
       await submitQuote(values);
       setStatus({
         state: 'success',
-        message: isSimulated()
-          ? 'Thank you. Your quotation request was recorded in this demo — no request was actually sent because no backend is connected.'
-          : 'Thank you. Your quotation request has been received and our team will be in touch shortly.',
+        message:
+          'Thank you. Your quotation request has been received and our team will be in touch shortly.',
       });
       setValues({ ...initialValues, projectType: defaultProjectType });
     } catch {
@@ -138,13 +139,7 @@ export default function QuoteForm({ defaultProjectType = '' }) {
           error={errors.projectType}
           options={[
             { value: '', label: 'Select project type' },
-            { value: 'Residential Construction', label: 'Residential Construction' },
-            { value: 'Commercial Construction', label: 'Commercial Construction' },
-            { value: 'Industrial Construction', label: 'Industrial Construction' },
-            { value: 'Renovation & Remodeling', label: 'Renovation & Remodeling' },
-            { value: 'Structural Design', label: 'Structural Design' },
-            { value: 'Infrastructure Development', label: 'Infrastructure Development' },
-            { value: 'Engineering Consultancy', label: 'Engineering Consultancy' },
+            ...formOptions.quoteProjectTypes.map((type) => ({ value: type, label: type })),
           ]}
         />
         <FormField
@@ -175,12 +170,7 @@ export default function QuoteForm({ defaultProjectType = '' }) {
           error={errors.budget}
           options={[
             { value: '', label: 'Select a budget range' },
-            { value: 'Under 50,000', label: 'Under 50,000' },
-            { value: '50,000 – 150,000', label: '50,000 – 150,000' },
-            { value: '150,000 – 500,000', label: '150,000 – 500,000' },
-            { value: '500,000 – 1,000,000', label: '500,000 – 1,000,000' },
-            { value: 'Above 1,000,000', label: 'Above 1,000,000' },
-            { value: 'Not decided yet', label: 'Not decided yet' },
+            ...formOptions.budgetRanges.map((range) => ({ value: range, label: range })),
           ]}
         />
         <FormField

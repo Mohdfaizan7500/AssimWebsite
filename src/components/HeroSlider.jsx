@@ -1,52 +1,33 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import IMAGES from '../data/images';
-
-const slides = [
-  {
-    image: IMAGES.heroOne,
-    alt: 'Modern residential building under construction with tower crane',
-    headline: 'Building Your Vision, Creating Your Future.',
-    description:
-      'Professional civil engineering and construction solutions designed around quality, innovation, and trust.',
-  },
-  {
-    image: IMAGES.heroTwo,
-    alt: 'Civil engineers reviewing plans on an active construction site',
-    headline: 'Engineering Excellence. Building Confidence.',
-    description:
-      'From initial planning to project completion, we deliver dependable engineering solutions.',
-  },
-  {
-    image: IMAGES.heroThree,
-    alt: 'Completed contemporary commercial building facade',
-    headline: 'Your Trusted Partner in Construction.',
-    description:
-      'Turning architectural ideas into durable, functional, and beautiful structures.',
-  },
-];
+import { useContent } from '../context/ContentContext.jsx';
 
 const AUTOPLAY_MS = 5000;
 
 export default function HeroSlider() {
+  const { heroSlides: slides } = useContent();
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const touchStart = useRef(null);
   const regionRef = useRef(null);
 
-  const goTo = useCallback((next) => {
-    setIndex((next + slides.length) % slides.length);
-  }, []);
+  const goTo = useCallback(
+    (next) => {
+      if (!slides.length) return;
+      setIndex((next + slides.length) % slides.length);
+    },
+    [slides.length]
+  );
 
   const next = useCallback(() => goTo(index + 1), [goTo, index]);
   const prev = useCallback(() => goTo(index - 1), [goTo, index]);
 
   useEffect(() => {
-    if (paused) return undefined;
+    if (paused || !slides.length) return undefined;
     const timer = setTimeout(next, AUTOPLAY_MS);
     return () => clearTimeout(timer);
-  }, [index, paused, next]);
+  }, [index, paused, next, slides.length]);
 
   useEffect(() => {
     const onVisibility = () => setPaused(document.hidden);

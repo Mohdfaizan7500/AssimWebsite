@@ -2,8 +2,7 @@ import { Link } from 'react-router-dom';
 import { Clock, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 import Logo from './Logo';
 import SocialIcon from './SocialIcon';
-import { site } from '../data/site';
-import { services } from '../data/services';
+import { useContent } from '../context/ContentContext.jsx';
 
 const quickLinks = [
   { label: 'Home', to: '/' },
@@ -17,6 +16,7 @@ const quickLinks = [
 const currentYear = new Date().getFullYear();
 
 export default function Footer() {
+  const { site, services } = useContent();
   const year = currentYear;
 
   return (

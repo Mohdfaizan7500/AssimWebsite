@@ -15,21 +15,11 @@ import CTABanner from '../components/CTABanner';
 import Reveal from '../components/Reveal';
 import SmartImage from '../components/SmartImage';
 import Icon from '../components/Icon';
-import { services } from '../data/services';
-import { featuredProjects } from '../data/projects';
-import { site } from '../data/site';
+import { useContent } from '../context/ContentContext.jsx';
 import { useSEO } from '../hooks/useSEO';
-import IMAGES from '../data/images';
-
-const aboutPoints = [
-  'Engineering expertise across residential and commercial builds',
-  'Quality-focused construction with documented checks',
-  'Commitment to safety on every active site',
-  'Timely project delivery against clear milestones',
-  'Customer satisfaction built on honest communication',
-];
 
 export default function Home() {
+  const { site, services, featuredProjects, images } = useContent();
   useSEO(site.seo.home);
 
   return (
@@ -41,7 +31,7 @@ export default function Home() {
         <div className="container-x grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <Reveal className="relative">
             <SmartImage
-              src={IMAGES.aboutMain}
+              src={images.aboutMain}
               alt="Civil engineer reviewing project drawings on a construction site"
               className="aspect-[4/3] w-full rounded-2xl shadow-card"
             />
@@ -52,7 +42,7 @@ export default function Home() {
               </p>
             </div>
             <SmartImage
-              src={IMAGES.aboutSecondary}
+              src={images.aboutSecondary}
               alt="Construction workers coordinating activities on site"
               className="absolute -left-4 -top-4 hidden h-32 w-32 rounded-xl border-4 border-white shadow-card lg:block"
             />
@@ -66,7 +56,7 @@ export default function Home() {
               description="AMD Engineer Solution combines technical engineering expertise with disciplined construction management. From the first sketch to final handover, we build structures that are safe, durable and true to your brief."
             />
             <ul className="mt-7 space-y-3">
-              {aboutPoints.map((point) => (
+              {site.homeHighlights.map((point) => (
                 <li key={point} className="flex items-start gap-3 text-sm text-ink sm:text-base">
                   <CheckCircle2
                     className="mt-0.5 h-5 w-5 shrink-0 text-orange-500"

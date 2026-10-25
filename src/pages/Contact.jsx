@@ -4,11 +4,11 @@ import SectionTitle from '../components/SectionTitle';
 import Reveal from '../components/Reveal';
 import ContactForm from '../components/ContactForm';
 import SocialIcon from '../components/SocialIcon';
-import { site } from '../data/site';
+import { useContent } from '../context/ContentContext.jsx';
 import { useSEO } from '../hooks/useSEO';
-import IMAGES from '../data/images';
 
 export default function Contact() {
+  const { site, images } = useContent();
   useSEO(site.seo.contact);
   const { contact } = site;
 
@@ -70,7 +70,7 @@ export default function Contact() {
       <PageHero
         title="Contact Us"
         description="Tell us about your project and our team will get back to you with clear, practical guidance."
-        image={IMAGES.contactBanner}
+        image={images.contactBanner}
         alt="Modern office interior of an engineering company"
         breadcrumbs={[{ label: 'Contact Us' }]}
       />

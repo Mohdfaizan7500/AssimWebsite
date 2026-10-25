@@ -1,23 +1,30 @@
 import { useCallback, useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight, Quote, Star } from 'lucide-react';
 import SmartImage from './SmartImage';
-import { testimonials } from '../data/testimonials';
+import { useContent } from '../context/ContentContext.jsx';
 
 export default function TestimonialSlider() {
+  const { testimonials } = useContent();
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
 
-  const goTo = useCallback((next) => {
-    setIndex((next + testimonials.length) % testimonials.length);
-  }, []);
+  const goTo = useCallback(
+    (next) => {
+      if (!testimonials.length) return;
+      setIndex((next + testimonials.length) % testimonials.length);
+    },
+    [testimonials.length]
+  );
 
   useEffect(() => {
-    if (paused) return undefined;
+    if (paused || !testimonials.length) return undefined;
     const timer = setTimeout(() => goTo(index + 1), 6000);
     return () => clearTimeout(timer);
-  }, [index, paused, goTo]);
+  }, [index, paused, goTo, testimonials.length]);
 
   const active = testimonials[index];
+
+  if (!active) return null;
 
   return (
     <div

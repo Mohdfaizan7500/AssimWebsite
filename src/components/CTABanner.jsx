@@ -1,19 +1,22 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import IMAGES from '../data/images';
+import { useContent } from '../context/ContentContext.jsx';
 
 export default function CTABanner({
-  image = IMAGES.ctaBanner,
+  image,
   alt = 'Construction engineers working on a structural project',
   title = "Let's Build Something Great Together.",
   description = 'Have a construction project in mind? Contact AMD Engineer Solution to discuss your requirements.',
   buttonLabel = 'Request a Free Quote',
   buttonTo = '/quote',
 }) {
+  const { images } = useContent();
+  const bannerImage = image || images.ctaBanner;
+
   return (
     <section className="relative isolate overflow-hidden">
       <img
-        src={image}
+        src={bannerImage}
         alt={alt}
         loading="lazy"
         className="absolute inset-0 h-full w-full object-cover"

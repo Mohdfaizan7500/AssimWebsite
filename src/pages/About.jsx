@@ -6,34 +6,22 @@ import Reveal from '../components/Reveal';
 import SmartImage from '../components/SmartImage';
 import Icon from '../components/Icon';
 import CTABanner from '../components/CTABanner';
-import { site } from '../data/site';
+import { useContent } from '../context/ContentContext.jsx';
 import { useSEO } from '../hooks/useSEO';
-import IMAGES from '../data/images';
-
-const safetyPractices = [
-  'Documented method statements and risk assessments before work starts',
-  'Mandatory personal protective equipment on all active sites',
-  'Regular toolbox talks and safety inductions for every worker',
-  'Routine site inspections and incident reporting procedures',
-  'Material testing and quality verification at key construction stages',
-];
-
-const qualityPractices = [
-  'Designs checked against the governing structural codes',
-  'Setting-out and dimensional checks before concrete pours',
-  'Concrete cube testing and compaction testing records',
-  'Snag lists and inspection sign-off before handover',
-];
 
 export default function About() {
+  const { site, images } = useContent();
   useSEO(site.seo.about);
+
+  const safetyPractices = site.about.safetyPractices;
+  const qualityPractices = site.about.qualityPractices;
 
   return (
     <>
       <PageHero
         title="About AMD Engineer Solution"
         description="A civil engineering and construction firm built on technical expertise, transparent communication and dependable delivery."
-        image={IMAGES.aboutMain}
+        image={images.aboutMain}
         alt="Engineers collaborating on a construction project"
         breadcrumbs={[{ label: 'About Us' }]}
       />
@@ -60,12 +48,12 @@ export default function About() {
           </Reveal>
           <Reveal delay={100} className="grid grid-cols-2 gap-4">
             <SmartImage
-              src={IMAGES.aboutSecondary}
+              src={images.aboutSecondary}
               alt="Site engineers discussing construction progress"
               className="aspect-[3/4] w-full rounded-2xl shadow-card"
             />
             <SmartImage
-              src={IMAGES.ctaBanner}
+              src={images.ctaBanner}
               alt="Structural work underway on a construction site"
               className="mt-8 aspect-[3/4] w-full rounded-2xl shadow-card"
             />
@@ -206,7 +194,7 @@ export default function About() {
                 ))}
               </ul>
               <SmartImage
-                src={IMAGES.heroTwo}
+                src={images.heroTwo}
                 alt="Engineers reviewing drawings on an active construction site"
                 className="mt-6 aspect-video w-full rounded-lg"
               />
@@ -255,7 +243,7 @@ export default function About() {
           </Reveal>
           <Reveal delay={100} className="mt-10">
             <SmartImage
-              src={IMAGES.teamHero}
+              src={images.teamHero}
               alt="AMD Engineer Solution engineering team in a project meeting"
               className="aspect-[21/9] w-full rounded-2xl shadow-card"
             />

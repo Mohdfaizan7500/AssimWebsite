@@ -1,10 +1,11 @@
 import CountUp from './CountUp';
 import Icon from './Icon';
-import { site } from '../data/site';
+import { useContent } from '../context/ContentContext.jsx';
 
 const icons = ['Building2', 'CalendarRange', 'Users', 'HardHat'];
 
 export default function StatsSection() {
+  const { site } = useContent();
   return (
     <section className="relative z-10 bg-navy-800">
       <div className="container-x">

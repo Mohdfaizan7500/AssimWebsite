@@ -1,38 +1,22 @@
-import { CheckCircle2, Clock, Phone, ShieldCheck } from 'lucide-react';
+import { Phone } from 'lucide-react';
 import PageHero from '../components/PageHero';
 import Reveal from '../components/Reveal';
 import QuoteForm from '../components/QuoteForm';
-import { site } from '../data/site';
+import Icon from '../components/Icon';
+import { useContent } from '../context/ContentContext.jsx';
 import { useSEO } from '../hooks/useSEO';
-import IMAGES from '../data/images';
-
-const assurances = [
-  {
-    icon: Clock,
-    title: 'Response Within 1–2 Business Days',
-    description: 'Our team reviews your request and responds with next steps or follow-up questions.',
-  },
-  {
-    icon: ShieldCheck,
-    title: 'No Obligation',
-    description: 'A quotation is a starting point for discussion, not a commitment to proceed.',
-  },
-  {
-    icon: CheckCircle2,
-    title: 'Clear, Itemised Pricing',
-    description: 'Where possible we break costs down so you can see where your budget goes.',
-  },
-];
 
 export default function Quote() {
+  const { site, images } = useContent();
   useSEO(site.seo.quote);
+  const assurances = site.quoteAssurances;
 
   return (
     <>
       <PageHero
         title="Request a Free Project Quotation"
         description="Share a few details about your project and we will prepare a no-obligation quotation for you."
-        image={IMAGES.quoteHero}
+        image={images.quoteHero}
         alt="Construction site with crane and building structure"
         breadcrumbs={[{ label: 'Request a Quote' }]}
       />
@@ -51,7 +35,7 @@ export default function Quote() {
                   {assurances.map((item) => (
                     <li key={item.title} className="flex gap-4">
                       <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-orange-500/10 text-orange-600">
-                        <item.icon className="h-5 w-5" aria-hidden="true" />
+                        <Icon name={item.icon} className="h-5 w-5" />
                       </span>
                       <div>
                         <p className="text-sm font-bold text-navy-800">{item.title}</p>
