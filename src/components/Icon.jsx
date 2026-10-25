@@ -1,0 +1,56 @@
+import {
+  Award,
+  BadgeCheck,
+  Blocks,
+  Building2,
+  Calculator,
+  CalendarRange,
+  ClipboardCheck,
+  Clock,
+  Compass,
+  DraftingCompass,
+  Hammer,
+  Handshake,
+  HardHat,
+  Home,
+  KeyRound,
+  Leaf,
+  MessagesSquare,
+  PencilRuler,
+  Ruler,
+  ShieldCheck,
+  TrafficCone,
+  TrendingUp,
+  Users,
+} from 'lucide-react';
+
+const icons = {
+  Award,
+  BadgeCheck,
+  Blocks,
+  Building2,
+  Calculator,
+  CalendarRange,
+  ClipboardCheck,
+  Clock,
+  Compass,
+  DraftingCompass,
+  Hammer,
+  Handshake,
+  HardHat,
+  Home,
+  KeyRound,
+  Leaf,
+  MessagesSquare,
+  PencilRuler,
+  Ruler,
+  ShieldCheck,
+  TrafficCone,
+  TrendingUp,
+  Users,
+};
+
+export default function Icon({ name, ...props }) {
+  const Component = icons[name] || Building2;
+  return <Component aria-hidden="true" {...props} />;
+}
